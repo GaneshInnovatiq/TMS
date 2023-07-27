@@ -1,0 +1,247 @@
+<div class="head-title">
+    <div class="left">
+      <h1>Course</h1>
+      <ul class="breadcrumb">
+        <li>
+          <a href="#">Course Kit</a>
+        </li>
+        <li><i class='bx bx-chevron-right' ></i></li>
+        <li>
+          <a class="active" href="#">Home</a>
+        </li>
+      </ul>
+    </div>
+    <button id="toggle" class="bg-light-subtle btn
+    border-danger shadow px-4 rounded-3  fw-bold" (click)="toggleList()">{{list? 'Add' : 'List'}} Course
+        Kit</button>
+    <a href="#" class="btn-download" (click)="upload()">
+      <i class='bx bxs-cloud-download' ></i>
+      <span class="text">Export PDF</span>
+    </a>
+  </div>
+
+
+
+
+<div class="table-data" *ngIf="!list">
+    <div class="order">
+        <div class="row" >
+            <div class=" text-start mt-3 p-5 rounded-5">
+                    <form [formGroup]="courseKitForm">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label for="" class="form-label">Course Name</label>
+                                <input type="text" class="form-control" placeholder="enter course name"
+                                    formControlName="name"
+                                    [class.invalid-input]="isSubmitted && courseKitForm.get('name')?.invalid || courseKitForm.get('name')?.invalid && courseKitForm.get('name')?.touched">
+                                <div *ngIf="isSubmitted"
+                                    [class.invalid-text]="isSubmitted && courseKitForm.get('name')?.invalid || courseKitForm.get('name')?.invalid && courseKitForm.get('name')?.touched">
+                                    {{ utils.getErrorMessage(courseKitForm, 'name')?.message }}
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <label for="" class="form-label">Document Link</label>
+                                <input type="text" class="form-control" name="dl" id="dl" placeholder="www."
+                                    formControlName="documentLink"
+                                    [class.invalid-input]="isSubmitted && courseKitForm.get('documentLink')?.invalid || courseKitForm.get('documentLink')?.invalid && courseKitForm.get('documentLink')?.touched">
+                                <div *ngIf="isSubmitted"
+                                    [class.invalid-text]="isSubmitted && courseKitForm.get('documentLink')?.invalid || courseKitForm.get('documentLink')?.invalid && courseKitForm.get('documentLink')?.touched">
+                                    {{ utils.getErrorMessage(courseKitForm, 'documentLink')?.message }}
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="" class="form-label">Short Description</label>
+                                <input type="text" class="form-control" name="sd" id="coursename"
+                                    formControlName="shortDescription" style="height: 108px"
+                                    [class.invalid-input]="isSubmitted && courseKitForm.get('shortDescription')?.invalid || courseKitForm.get('shortDescription')?.invalid && courseKitForm.get('shortDescription')?.touched">
+                                <div *ngIf="isSubmitted"
+                                    [class.invalid-text]="isSubmitted && courseKitForm.get('shortDescription')?.invalid || courseKitForm.get('shortDescription')?.invalid && courseKitForm.get('shortDescription')?.touched">
+                                    {{ utils.getErrorMessage(courseKitForm, 'shortDescription')?.message }}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="" class="form-label">Long Description</label>
+                                <input type="text" class="form-control" style="height: 108px"
+                                    formControlName="longDescription"
+                                    [class.invalid-input]="isSubmitted && courseKitForm.get('longDescription')?.invalid || courseKitForm.get('longDescription')?.invalid && courseKitForm.get('longDescription')?.touched">
+                                <div *ngIf="isSubmitted"
+                                    [class.invalid-text]="isSubmitted && courseKitForm.get('longDescription')?.invalid || courseKitForm.get('longDescription')?.invalid && courseKitForm.get('longDescription')?.touched">
+                                    {{ utils.getErrorMessage(courseKitForm, 'longDescription')?.message }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <p>Video</p>
+                            <div  class=" col-nd-12 p-5 text-center border-dashed" appDnd (fileDropped)="onFileDropped($event)">
+                                <input type="file" #fileDropRef id="fileDropRef"
+                                    (change)="fileBrowseHandler($event.target)" formControlName="videoLink">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);"><path d="M6 22h12a2 2 0 0 0 2-2V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2zm7-18 5 5h-5V4zM8 14h3v-3h2v3h3v2h-3v3h-2v-3H8v-2z"></path></svg>
+                                <h4>Drag & Drop Video, or <label for="fileDropRef"
+                                        style="background: none; color: #D64E49;">Browse</label></h4>
+                                <p>Max 6 Mb each, 12 MB for Videos</p>
+                            </div>
+                        </div>
+                        <div class="row mb-3 mt-5">
+                            <div class="col-6">
+                                <button id="back" (click)="toggleList()">Back</button>
+                            </div>
+                            <div class="col-6 text-end">
+                                <button id="next" >Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+        <!-- ADD Course -->
+            <div class="table-data" >
+                <div class="order" *ngIf="list">
+                  <div class="head">
+                    <h3> Course Kit</h3>
+                    <div class="search-container">
+                        <form action="/search" method="get">
+                          <input class="search expandright" id="searchright" type="search" name="q" placeholder="Search"
+                          [(ngModel)]="courseKitModel.filterText" 
+                                (ngModelChange)="fetchCourseKits()" 
+                                (change)="fetchCourseKits()">
+                          <label class="button searchbutton" for="searchright"><span class="mglass">&#9906;</span></label>
+                        </form>
+                      </div>
+                    <i class='bx bx-filter' style="color: #008fd3;"></i>
+                  </div>
+                        <div class="table-responsive">
+                            <table >
+                                <thead>
+                                    <tr>
+                                        <th scope="col" *ngFor="let header of headeritems">{{header}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of courseKits; index as index">
+                                        <td>{{item.name}}</td>
+                                        <td>{{item.shortDescription}}</td>
+                                        <td>{{item.longDescription}}</td>
+                                        <td>
+                                            <div class="link">
+                                                <a href="{{item.videoLink}}" target="_blank">{{item.videoLink}}</a>
+                                              <i class="bx bxs-video"></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="link">
+                                                <a href="{{item.documentLink}}"
+                                                    target="_blank">{{item.documentLink}}</a>
+                                                   
+                                            </div>
+                                            
+                                        </td>
+                                        <td>
+
+
+                                            <div class="input-group">
+                                                <svg  class="dropdown-toggle" data-bs-toggle="dropdown"
+                                                aria-expanded="false"
+                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="10 0 14 24" style="fill:  #000; margin-left: 23px;"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                  <li>
+                                                    <a class="dropdown-item" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal" (click)="toggleEdit(item)"> <i class='bx bx-edit-alt'></i> Edit</a>
+                                                  </li>
+                                                  <li><a class="dropdown-item" [routerLink]="['/Course/List']"  (click)="deleteItem(index)"><i class='bx bx-trash'></i>Delte</a></li>
+                                                  <li><a class="dropdown-item" href="#"><i class='bx bx-user-check'></i>Attendance</a></li>
+                                                </ul>
+                                              </div>
+                                              <div class="modal fade" id="exampleModal" tabindex="-1"
+                                              aria-labelledby="Edit Course Kit" aria-hidden="true">
+                                              <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                  <div class="modal-content rounded-4 p-4">
+                                                      <div class="modal-header">
+                                                          <h3 class="modal-title" id="exampleModalLabel">Edit
+                                                              CourseKit</h3>
+                                                          <button type="button" class="btn-close"
+                                                              data-bs-dismiss="modal" aria-label="Close"></button>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                          <div class="container">
+
+                                                              <form #f="ngForm" (ngSubmit)="onEdit(f, index)">
+                                                                  <div class="row mb-3">
+                                                                      <div class="col-6">
+                                                                          <label for="" class="form-label">Course
+                                                                              Name</label>
+                                                                          <input type="text" value="{{item.name}}"
+                                                                              class="form-control" name="dl" id="dl"
+                                                                              placeholder="Enter Course Name">
+                                                                      </div>
+                                                                      <div class="col-6">
+                                                                          <label for="" class="form-label">Document
+                                                                              Link</label>
+                                                                          <input type="text"
+                                                                              value="{{item.documentLink}}" ngModel
+                                                                              class="form-control" id="dl"
+                                                                              placeholder="www.">
+                                                                      </div>
+                                                                  </div>
+                                                                  <div class="row mb-3">
+                                                                      <div class="col-6">
+                                                                          <label for="" class="form-label">Short
+                                                                              Description</label>
+                                                                          <input type="text" style="height: 108px"
+                                                                              ngModel class="form-control" name="sd"
+                                                                              id="coursename">
+                                                                      </div>
+                                                                      <div class="col-6">
+                                                                          <label for="" class="form-label">Long
+                                                                              Description</label>
+                                                                          <input type="text" style="height: 108px"
+                                                                              ngModel class="form-control" name="ld"
+                                                                              id="dl">
+                                                                      </div>
+                                                                  </div>
+                                                                  <div class="row mb-3">
+                                                                      <p>Video</p>
+                                                                      <div class="box p-3" appDnd
+                                                                          (fileDropped)="onFileDropped($event)">
+                                                                          <input type="file" #fileDropRef
+                                                                              id="fileDropRef" name="vltitle" ngModel
+                                                                              (change)="fileBrowseHandler($event.target)">
+                                                                          <h4>Drag & Drop Video, or <label
+                                                                                  for="fileDropRef"
+                                                                                  style="background: none; color: #D64E49;">Browse</label>
+                                                                          </h4>
+                                                                          <p>Max 6 Mb each, 12 MB for Videos</p>
+                                                                      </div>
+                                                                  </div>
+                                                                  <div class="row mb-3">
+                                                                      <div class="col-6">
+                                                                          <button id="back"
+                                                                              data-bs-dismiss="modal">Back</button>
+                                                                      </div>
+                                                                      <div class="col-6 text-end">
+                                                                          <button id="next"
+                                                                              data-bs-dismiss="modal">Submit</button>
+                                                                      </div>
+                                                                  </div>
+                                                              </form>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                   </div>
+                   </div>
+    
+    <!-- <mat-paginator [length]="100" [pageSize]="100" (page)="handlePagination()"></mat-paginator> -->

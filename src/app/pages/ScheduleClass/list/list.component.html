@@ -1,0 +1,122 @@
+
+<div class="head-title">
+    <div class="left">
+      <h1>Schedule Class</h1>
+      <ul class="breadcrumb">
+        <li>
+          <a href="#">Schedule Class List</a>
+        </li>
+        <li><i class='bx bx-chevron-right' ></i></li>
+        <li>
+          <a class="active" href="#">Home</a>
+        </li>
+      </ul>
+    </div>
+    <a href="#" class="btn-download" (click)="upload()">
+      <i class=' bx bxs-cloud-download' ></i>
+      <span class="text">Export PDF</span>
+    </a>
+  </div>
+
+
+
+
+
+
+
+<div class="container-fluid">
+    <div class="container-top">
+        <div class="table-data">
+            <div class="order">
+              <div class="head">
+                <h3>Recent Schedule Class List</h3>
+                <div class="search-container">
+                  <form action="/search" method="get">
+                    <input class="search expandright" id="searchright" type="search" name="q" placeholder="Search">
+                    <label class="button searchbutton" for="searchright"><span class="mglass">&#9906;</span></label>
+                  </form>
+                </div>
+                <i class='bx bx-filter' style="color: #008fd3;"></i>
+              </div>
+              
+              <div class="table-responsive">
+                <table>
+                  <thead>
+                    <tr>
+                        <th scope="col">Course Name</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Options</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of dataSource">
+                        <td>{{item.courseId.title}}</td>
+                        <td>{{item.sessions[0].sessionStartDate |date}}</td>
+                        <td>{{item.sessions[0].sessionEndDate | date}}</td>
+                        <td>
+                            <div class="input-group">
+                              <svg  class="dropdown-toggle" data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                              xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="10 0 14 24" style="fill:  #000; margin-left: 23px;"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <a class="dropdown-item"  [routerLink]="['/class-add',item]"> <i class='bx bx-edit-alt'></i> Edit</a>
+                                </li>
+                                <li><a class="dropdown-item" [routerLink]="['/class-list']" ><i class='bx bx-trash'></i>Delte</a></li>
+                                <li><a class="dropdown-item" href="#"><i class='bx bx-user-check'></i>Attendance</a></li>
+                              </ul>
+                            </div>
+                                </td> 
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        <!-- table view -->
+                        <!-- <table class="table w-100">
+                            <thead class="table-secondary">
+                                <tr>
+                                    <th scope="col">Course Name</th>
+                                    <th scope="col">Start Date</th>
+                                    <th scope="col">End Date</th>
+                                    <th scope="col">Options</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of dataSource">
+                                    <td>{{item.courseId.title}}</td>
+                                    <td>{{item.sessions[0].sessionStartDate |date}}</td>
+                                    <td>{{item.sessions[0].sessionEndDate | date}}</td>
+                                    <td>
+                                        <div class="option">
+                                            <div class="dropdown" *ngIf="item.optselected">
+                                                <div class="tab">
+                                                    <img src="/assets/pencil.svg" alt="pencil">
+                                                    <a type="button" [routerLink]="['/Schedule Class/Add',item.id]"
+                                                        class="menu_text">Edit</a>
+                                                </div>
+                                                <div class="tab">
+                                                    <img src="/assets/delete.svg" alt="delete">
+                                                    <a type="button" (click)="delete(item.id)"
+                                                        class="menu_text">Delete</a>
+                                                </div>
+                                                <div class="tab">
+                                                    <img src="/assets/logo/people.svg" alt="person">
+                                                    <p>Attendance</p>
+                                                </div>
+                                            </div>
+                                            <button class="rounded-circle border-0 py-1 px-2" (click)="selectopt(item)"
+                                                style="margin-left: 20px;">
+                                                <img class="mb-1" src="/assets/logo/ellipses.svg"
+                                                    alt="ellipses"></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div> -->
+                <!-- <mat-paginator [length]="100" [pageSize]="100" (page)="handlePagination()"></mat-paginator> -->

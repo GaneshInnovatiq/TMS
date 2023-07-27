@@ -1,0 +1,441 @@
+
+<div class="head-title">
+    <div class="left">
+      <h1>Course</h1>
+      <ul class="breadcrumb">
+        <li>
+          <a href="#">Course Add</a>
+        </li>
+        <li><i class='bx bx-chevron-right' ></i></li>
+        <li>
+          <a class="active" href="#">Home</a>
+        </li>
+      </ul>
+    </div>
+    <a href="#" class="btn-download">
+      <i class='bx bxs-cloud-download' ></i>
+      <span class="text">Export PDF</span>
+    </a>
+  </div>
+
+<div class="table-data">
+    <div class="order">
+<div class="container" *ngIf="next"> 
+<div class="container-border m-4 ">
+    <h4 class="text-center">{{ editUrl ? 'Edit Course Create' : 'Course Create' }}</h4>
+
+    <section class="step-wizard">
+        <ul class="step-wizard-list " >
+            <li class="step-wizard-item" [ngClass]="{'current-item':courseForm.invalid}" >
+                <span class="progress-count">1</span>
+                <span class="progress-label">Course Create</span>
+            </li>
+            <li class="step-wizard-item " [ngClass]="{'current-item':courseForm.valid}">
+                <span class="progress-count">2</span>
+                <span class="progress-label">WBS Code</span>
+            </li>
+           
+        </ul>
+    </section>
+    <form [formGroup]="courseForm" class="">
+        <div class="row mt-4">
+            <div class="col-5  offset-lg-1">
+                <label>Course Name</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control rounded-3" formControlName="title" placeholder="Search and Rescue Administrators"
+                        aria-label="Example text with button addon" aria-describedby="button-addon1"
+                        [class.invalid-input]="isSubmitted && courseForm.get('title')?.invalid || courseForm.get('title')?.invalid && courseForm.get('title')?.touched"
+                        [readonly]="isInputReadonly()" >
+                </div>
+                <div *ngIf="isSubmitted" [class.invalid-text]="isSubmitted && courseForm.get('title')?.invalid || courseForm.get('title')?.invalid && courseForm.get('title')?.touched">
+                    {{ utils.getErrorMessage(courseForm, 'title')?.message }}
+                </div>
+            </div>
+            <div class="col-5 ">
+                <label>Course Code</label>
+                <div class="input-group mb-3">
+                    <input  type="text" class="form-control rounded-3" formControlName="courseCode" placeholder="SRA9102"
+                        aria-label="Example text with button addon" aria-describedby="button-addon1"
+                        [class.invalid-input]="isSubmitted && courseForm.get('courseCode')?.invalid || courseForm.get('courseCode')?.invalid && courseForm.get('courseCode')?.touched"
+                        >
+                </div>            <div *ngIf="isSubmitted" [class.invalid-text]="isSubmitted && courseForm.get('courseCode')?.invalid || courseForm.get('courseCode')?.invalid && courseForm.get('sub_category')?.touched">
+    
+                    {{ utils.getErrorMessage(courseForm, 'courseCode')?.message }}
+                </div>
+                </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-5 offset-lg-1">
+                <label>Main Category</label>
+                <select class="form-select form-select-lg mb-3 rounded-3" formControlName="main_category" aria-label=".form-select-lg example"  
+                [class.invalid-input]="isSubmitted && courseForm.get('main_category')?.invalid || courseForm.get('main_category')?.invalid && courseForm.get('main_category')?.touched"
+                (change)="mainCategoryChange()"  >
+                    <option disabled>Choose...</option>
+                    <option *ngFor="let item of mainCategories" [value]="item.id">
+                        {{item.category_name}}
+                      </option>
+                      </select>
+                <div *ngIf="isSubmitted" [class.invalid-text]="isSubmitted && courseForm.get('main_category')?.invalid || courseForm.get('main_category')?.invalid && courseForm.get('main_category')?.touched">
+                    {{ utils.getErrorMessage(courseForm, 'main_category')?.message }}
+                </div>
+            </div>
+            <div class="col-5 ">
+                <label>Sub Category</label>
+                <select class="form-select form-select-lg mb-3 rounded-3"formControlName="sub_category" aria-label=".form-select-lg example"
+                [class.invalid-input]="isSubmitted && courseForm.get('sub_category')?.invalid || courseForm.get('sub_category')?.invalid && courseForm.get('sub_category')?.touched" 
+                >
+                    <option disabled>Choose...</option>
+                    <option *ngFor="let item of subCategories" [value]="item.id">
+                        {{item.category_name}}
+                      </option>
+                          </select>
+                <div *ngIf="isSubmitted" [class.invalid-text]="isSubmitted && courseForm.get('sub_category')?.invalid || courseForm.get('sub_category')?.invalid && courseForm.get('sub_category')?.touched">
+                    {{ utils.getErrorMessage(courseForm, 'sub_category')?.message }}
+                </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-2 offset-lg-1">
+                    <label>Days</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control rounded-3" formControlName="course_duration_in_days" placeholder="05"
+                            aria-label="Example text with button addon" aria-describedby="button-addon1"
+                        [class.invalid-input]="isSubmitted && courseForm.get('course_duration_in_days')?.invalid || courseForm.get('course_duration_in_days')?.invalid && courseForm.get('course_duration_in_days')?.touched"
+                        [readonly]="isInputReadonly()">         
+                </div>
+                <div *ngIf="isSubmitted" [class.invalid-text]="isSubmitted && courseForm.get('course_duration_in_days')?.invalid || courseForm.get('course_duration_in_days')?.invalid && courseForm.get('course_duration_in_days')?.touched">
+                    {{ utils.getErrorMessage(courseForm, 'course_duration_in_days')?.message }}
+                    </div>
+                </div>
+                <div class="col-md-2 offset-lg-1">
+                    <label>Training</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control rounded-3" formControlName="training_hours" placeholder="10"
+                            aria-label="Example text with button addon" aria-describedby="button-addon1"
+                        [class.invalid-input]="isSubmitted && courseForm.get('training_hours')?.invalid || courseForm.get('training_hours')?.invalid && courseForm.get('training_hours')?.touched"
+                        [readonly]="isInputReadonly()">
+                </div>
+                <div *ngIf="isSubmitted" [class.invalid-text]="isSubmitted && courseForm.get('training_hours')?.invalid || courseForm.get('training_hours')?.invalid && courseForm.get('training_hours')?.touched">
+                    {{ utils.getErrorMessage(courseForm, 'training_hours')?.message }}
+                    </div> 
+                </div>
+                <div class="col-md-2 ">
+                    <label>Fees</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control rounded-3" formControlName="fee" placeholder="2750"
+                            aria-label="Example text with button addon" aria-describedby="button-addon1"
+                        [class.invalid-input]="isSubmitted && courseForm.get('fee')?.invalid || courseForm.get('fee')?.invalid && courseForm.get('fee')?.touched"
+                        [readonly]="isInputReadonly()">
+                    </div>
+                <div *ngIf="isSubmitted" [class.invalid-text]="isSubmitted && courseForm.get('fee')?.invalid || courseForm.get('fee')?.invalid && courseForm.get('fee')?.touched">
+                    {{ utils.getErrorMessage(courseForm, 'fee')?.message }}
+                </div> 
+    
+                </div>
+                <div class="col-md ">
+                    <label>Currency</label><br>
+                    <div class="form-check form-check-inline mt-3">
+                        <input class="form-check-input" type="radio" formControlName="currency_code"    value="1"
+                        [class.invalid-input]="isSubmitted && courseForm.get('currency_code')?.invalid || courseForm.get('currency_code')?.invalid && courseForm.get('currency_code')?.touched"
+                        [readonly]="isInputReadonly()">
+                        <label class="form-check-label" for="inlineCheckbox1">SGD</label>
+                    </div>
+    
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" value="2" formControlName="currency_code"
+                        [class.invalid-input]="isSubmitted && courseForm.get('currency_code')?.invalid || courseForm.get('currency_code')?.invalid && courseForm.get('currency_code')?.touched"
+                        [readonly]="isInputReadonly()">
+                      <label class="form-check-label">
+                        USD
+                      </label>                
+                    </div>
+                    <div *ngIf="isSubmitted" [class.invalid-text]="isSubmitted && courseForm.get('currency_code')?.invalid || courseForm.get('currency_code')?.invalid && courseForm.get('currency_code')?.touched">
+                        {{ utils.getErrorMessage(courseForm, 'currency_code')?.message }}
+                    </div>     
+                </div>
+                </div>
+    
+                <div class="row mt-4">
+                    <div class="col-md-5 offset-lg-1">
+                        <label>Skill Connect Code</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control rounded-3" formControlName="skill_connect_code" placeholder="SRA91"
+                                aria-label="Example text with button addon" aria-describedby="button-addon1"
+                            [class.invalid-input]="isSubmitted && courseForm.get('skill_connect_code')?.invalid || courseForm.get('skill_connect_code')?.invalid && courseForm.get('skill_connect_code')?.touched"
+                            [readonly]="isInputReadonly()" >
+    
+                        </div>
+                        <div *ngIf="isSubmitted" [class.invalid-text]="isSubmitted && courseForm.get('skill_connect_code')?.invalid || courseForm.get('skill_connect_code')?.invalid && courseForm.get('skill_connect_code')?.touched">
+                            {{ utils.getErrorMessage(courseForm, 'skill_connect_code')?.message }}
+                        </div>    
+        
+                    </div>
+                    <div class="col-md-5  rounded-3">
+                        <label>Description</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control rounded-3" placeholder="Search and Rescue Administration"
+                                formControlName="course_description"aria-label="Example text with button addon" aria-describedby="button-addon1"
+    
+                            [class.invalid-input]="isSubmitted && courseForm.get('course_description')?.invalid || courseForm.get('course_description')?.invalid && courseForm.get('course_description')?.touched"
+                            [readonly]="isInputReadonly()">
+    
+                        </div>
+                        <div *ngIf="isSubmitted" [class.invalid-text]="isSubmitted && courseForm.get('course_description')?.invalid || courseForm.get('course_description')?.invalid && courseForm.get('course_description')?.touched">
+                            {{ utils.getErrorMessage(courseForm, 'course_description')?.message }}
+                        </div>        
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-10 offset-lg-1">
+                        <label>Course Detailed Description</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control rounded-3" formControlName="course_detailed_description" placeholder="SRA91"
+                                aria-label="Example text with button addon" aria-describedby="button-addon1"
+                               
+                            [class.invalid-input]="isSubmitted && courseForm.get('course_detailed_description')?.invalid || courseForm.get('course_detailed_description')?.invalid && courseForm.get('course_detailed_description')?.touched"
+                            [readonly]="isInputReadonly()">
+                    </div>
+                    <div *ngIf="isSubmitted" [class.invalid-text]="isSubmitted && courseForm.get('course_detailed_description')?.invalid || courseForm.get('course_detailed_description')?.invalid && courseForm.get('course_detailed_description')?.touched">
+                        {{ utils.getErrorMessage(courseForm, 'course_detailed_description')?.message }}
+                        </div>
+                    </div>
+                </div>    
+                <div class="row py-4">
+                    <div class="col-md-8 offset-lg-1">
+                        <button id="back" [routerLink]="['/list']"> Back </button>
+                    </div>
+                    <div class="col-md-2 ">
+                        <button (click)="Next()" id="next">Next</button>
+                    </div>
+                </div>
+    </form>
+    </div>
+</div>
+<div *ngIf="!next" >
+    <div class="container">
+        <h5 >{{ editUrl ? 'Edit Course Create' : 'Course Create' }}</h5>
+        <section class="step-wizard">
+            <ul class="step-wizard-list ">
+                <li class="step-wizard-item ">
+                    <span class="progress-count">1</span>
+                    <span class="progress-label">Course Create</span>
+                </li>
+                <li class="step-wizard-item" [ngClass]="{'current-item':wbsForm.invalid}">
+                    <span class="progress-count">2</span>
+                    <span class="progress-label">WBS Code</span>
+                </li>
+               
+            </ul>
+        </section>
+        <form [formGroup]="wbsForm">
+        <div class="row rounded-3">
+            <div class="col-md-4">
+                <label>PDU Technical</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control rounded-3 w-100" formControlName="pdu_technical" placeholder=""
+                        aria-label="Example text with button addon" aria-describedby="button-addon1"
+                        [class.invalid-input]="isWbsSubmitted && wbsForm.get('pdu_technical')?.invalid || wbsForm.get('pdu_technical')?.invalid && wbsForm.get('pdu_technical')?.touched">
+                </div>
+                <div *ngIf="isWbsSubmitted" [class.validation-error]="isWbsSubmitted && wbsForm.get('pdu_technical')?.invalid || wbsForm.get('pdu_technical')?.invalid && wbsForm.get('pdu_technical')?.touched">
+                    {{ utils.getErrorMessage(wbsForm, 'pdu_technical')?.message }}
+                </div>    
+            </div>
+            <div class="col-md-4">
+                <label>PDU Leadership</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control rounded-3 w-100" placeholder=""
+                        aria-label="Example text with button addon" formControlName="pdu_leadership" aria-describedby="button-addon1"
+                        [class.invalid-input]="isWbsSubmitted && wbsForm.get('pdu_leadership')?.invalid || wbsForm.get('pdu_leadership')?.invalid && wbsForm.get('pdu_leadership')?.touched">
+                </div>
+                <div *ngIf="isWbsSubmitted" [class.validation-error]="isWbsSubmitted && wbsForm.get('pdu_leadership')?.invalid || wbsForm.get('pdu_leadership')?.invalid && wbsForm.get('pdu_leadership')?.touched">
+                    {{ utils.getErrorMessage(wbsForm, 'pdu_leadership')?.message }}
+                </div>    
+            </div>
+            <div class="col-md-4">
+                <label>PDU Startegic</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control rounded-3 w-100" placeholder=""
+                        aria-label="Example text with button addon" formControlName="pdu_strategic" aria-describedby="button-addon1"
+                        [class.invalid-input]="isWbsSubmitted && wbsForm.get('pdu_strategic')?.invalid || wbsForm.get('pdu_strategic')?.invalid && wbsForm.get('pdu_strategic')?.touched">
+                </div>
+                <div *ngIf="isWbsSubmitted" [class.validation-error]="isWbsSubmitted && wbsForm.get('pdu_strategic')?.invalid || wbsForm.get('pdu_strategic')?.invalid && wbsForm.get('pdu_strategic')?.touched">
+                    {{ utils.getErrorMessage(wbsForm, 'pdu_strategic')?.message }}
+                </div>    
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label >Thumbnail</label>
+            <div class="col-md-12 p-5 text-center border-dashed">
+                <input type="file" #fileDropRef id="fileDropRef" formControlName="image_link"  (change)="onFileUpload($event)">
+                <!-- <img src="/assets/add-image-icon.svg"> -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);"><path d="M6 22h12a2 2 0 0 0 2-2V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2zm7-18 5 5h-5V4zM8 14h3v-3h2v3h3v2h-3v3h-2v-3H8v-2z"></path></svg>
+                <h5 class="mt-5">Drag & Drop Image, or <label for="fileDropRef"
+                        style="background: none; color: #D64E49;margin-left: 1px;">Browse</label>
+                </h5>
+                <span *ngIf="uploadedImage">{{uploadedImage}}</span>
+
+                <!-- <p>Max 6 MB each, 12 MB for Videos</p>
+                <p style="display: inline;">Aspect Ratio 16:9</p>
+                <p style="display: inline;">Recommended Size 1024 * 576</p> -->
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <label>Website Link</label>
+                <div class="website">
+                    <div class="input-group">
+                        <input type="text" class="form-control" formControlName="website_link"  placeholder="www" aria-label="Website link"
+                        
+                        [class.invalid-input]="isWbsSubmitted && wbsForm.get('website_link')?.invalid || wbsForm.get('website_link')?.invalid && wbsForm.get('website_link')?.touched">
+                        <span class="input-group-text" (click)="upload()">
+                            <input type="file" class="form-control" id="fileDropRef">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAcNJREFUSEvV1T1IV2EUx/GPReUUlFBDi0FtFkFTSOBSQ0tEQ/Q2KREFvWJDKEEoImIZIhbRUgRRTSU1R9Db0hjRVkNbYBRELyhHnguPl792bynUs/3v/57zPc85v/O7TRb5NC1yfv8sYCO2YR0+4iXeNOrGn9zgCK6gOUv4A93p+SxOXcBRjOMXLuMJ2nEWy3ACozmhLqAF99CDZ1mirXiKJYj2fSj+qwuYT3QX0Yt9uFsHsBydWIuvuIbPDUiHcCvdrr8q4CSispVZwm+4ijOYyp7fxGHsx50qgPMoKol+P0cbdjKzPwOId+IU1YeaNuD97wDDqcII2I3HWaWbMYI9mMQuPMDSqio6jUv4mZI/wircxzG8zWA78BArMIRz5dmUVbQe71I1eS8HU/CXpPPvWI3jSZqhnr4qm1z08ga6soAoJNoSixaqKk6oKeYwNpd+yzeISkI1s7ScBYc9bMemNPRXaavn3I8y4ABuJ8iFhbDyMqA1DTG8JjzmdQaJ39HnvfhUFd7IKgoVxSBDGS/QgVNp+OGm1/8GELEHk1TXZInCwEKmE1WTx3vzmV2oJdqyBTHM+KjEbtQ6C+mmDcH/P2AaBcRUGclFm5IAAAAASUVORK5CYII="/>
+                        </span>
+                    </div>
+                    <div *ngIf="isWbsSubmitted" [class.validation-error]="isWbsSubmitted && wbsForm.get('website_link')?.invalid || wbsForm.get('website_link')?.invalid && wbsForm.get('website_link')?.touched">
+                        {{ utils.getErrorMessage(wbsForm, 'website_link')?.message }}
+                    </div>    
+    
+                </div>
+
+            </div>
+            <div class="col-md-6" >
+                <label>Funding/Grant</label>
+                <select class="form-select  mb-3 rounded-3" formControlName="funding_grant" 
+                    [class.invalid-input]="isWbsSubmitted && wbsForm.get('funding_grant')?.invalid || wbsForm.get('funding_grant')?.invalid && wbsForm.get('funding_grant')?.touched">
+                    <option >Choose...</option>
+                    <option *ngFor="let item of fundingGrants" [value]="item.id">
+                      {{item.grant_type}}
+                    </option>
+                      </select>
+                <div *ngIf="isWbsSubmitted" [class.validation-error]="isWbsSubmitted && wbsForm.get('funding_grant')?.invalid || wbsForm.get('funding_grant')?.invalid && wbsForm.get('funding_grant')?.touched">
+                    {{ utils.getErrorMessage(wbsForm, 'funding_grant')?.message }}
+                </div>    
+            </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <label>Survey</label>
+                    <select class="form-select  mb-3 rounded-3"
+                        formControlName="survey" aria-label=". example" 
+                    [class.invalid-input]="isWbsSubmitted && wbsForm.get('survey')?.invalid || wbsForm.get('survey')?.invalid && wbsForm.get('survey')?.touched">
+                        <option >Choose...</option>
+              <option *ngFor="let item of survey" [value]="item.id" >
+                {{item.name}}
+              </option>
+            </select>
+                    <div *ngIf="isWbsSubmitted" [class.validation-error]="isWbsSubmitted && wbsForm.get('survey')?.invalid || wbsForm.get('survey')?.invalid && wbsForm.get('survey')?.touched">
+                        {{ utils.getErrorMessage(wbsForm, 'survey')?.message }}
+                    </div>     
+                </div>
+                <div class="col-md-6">
+                    <label>Assign Instructors</label>
+                    <select class="form-select  mb-3 rounded-3"
+                        formControlName="course_instructor" aria-label=". example"
+                    [class.invalid-input]="isWbsSubmitted && wbsForm.get('course_instructor')?.invalid || wbsForm.get('course_instructor')?.invalid && wbsForm.get('course_instructor')?.touched">
+                        <option >Choose...</option>
+                        <option *ngFor="let item of instructors" [value]="item.id">
+                            {{item.user_id.name + ' ' + item.user_id.last_name}}
+                          </option>
+                                </select>
+                    <div *ngIf="isWbsSubmitted" [class.validation-error]="isWbsSubmitted && wbsForm.get('course_instructor')?.invalid || wbsForm.get('course_instructor')?.invalid && wbsForm.get('course_instructor')?.touched">
+                        {{ utils.getErrorMessage(wbsForm, 'course_instructor')?.message }}
+                    </div>     
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <label>Assign Exam</label>
+                    <select class="form-select  mb-3 rounded-3"
+                        formControlName="assign_exam" aria-label=". example"
+                    [class.invalid-input]="isWbsSubmitted && wbsForm.get('assign_exam')?.invalid || wbsForm.get('assign_exam')?.invalid && wbsForm.get('assign_exam')?.touched">
+                        <option >Choose...</option>
+                        <option *ngFor="let item of courses" [value]="item.text">
+                            {{item.text}}
+                          </option>
+                    </select>
+                    <div *ngIf="isWbsSubmitted" [class.validation-error]="isWbsSubmitted && wbsForm.get('assign_exam')?.invalid || wbsForm.get('assign_exam')?.invalid && wbsForm.get('assign_exam')?.touched">
+                        {{ utils.getErrorMessage(wbsForm, 'assign_exam')?.message }}
+                    </div>     
+                </div>
+                <div class="col-md-6">
+                    <label>Assign Coursekit</label>
+                    <select class="form-select  mb-3 rounded-3"
+                         formControlName="course_kit" aria-label=". example"
+                    [class.invalid-input]="isWbsSubmitted && wbsForm.get('course_kit')?.invalid || wbsForm.get('course_kit')?.invalid && wbsForm.get('course_kit')?.touched">
+                        <option >Choose...</option>
+                        <option *ngFor="let item of courseKits" [value]="item.id">
+                            {{item.name}}
+                          </option>
+                                </select>
+                    <div *ngIf="isWbsSubmitted" [class.validation-error]="isWbsSubmitted && wbsForm.get('course_kit')?.invalid || wbsForm.get('course_kit')?.invalid && wbsForm.get('course_kit')?.touched">
+                        {{ utils.getErrorMessage(wbsForm, 'course_kit')?.message }}
+                    </div>     
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label>Certificates</label>
+                <select class="form-select form-select-md mb-3 rounded-3" formControlName="certificates" aria-label=". example"
+                                       
+                    [class.invalid-input]="isWbsSubmitted && wbsForm.get('certificates')?.invalid || wbsForm.get('certificates')?.invalid && wbsForm.get('certificates')?.touched">
+                    <option >Choose...</option>
+                    <option *ngFor="let certificate of certificates" [value]="certificate.id">{{certificate.title}}</option>
+                </select>
+                <div *ngIf="isWbsSubmitted" [class.validation-error]="isWbsSubmitted && wbsForm.get('certificates')?.invalid || wbsForm.get('certificates')?.invalid && wbsForm.get('certificates')?.touched">
+                    {{ utils.getErrorMessage(wbsForm, 'certificates')?.message }}
+                </div>     
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-9">
+                    <button (click)="Back()" id="back">Back</button>
+                </div>
+                <div class="col-md-3" >
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-primary me-md-2" type="button" 
+                            id="back" [routerLink]="['/list']">Cancel</button>
+
+                        <button type="button" *ngIf="!editUrl"  class="btn btn-primary" id="next"
+                            data-bs-target="#exampleModal1" (click)="submit()" [attr.data-bs-toggle]="wbsForm.valid ? 'modal' : null">
+                            Submit
+                        </button>
+                        <button type="button" *ngIf="editUrl"  class="btn btn-primary" id="back"
+                        data-bs-target="#exampleModal1" (click)="save()" [attr.data-bs-toggle]="wbsForm.valid ? 'modal' : null">
+                        Save
+                    </button>
+
+                    </div> 
+
+                </div>
+            </div>
+
+            <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <img src="assets/Approves tick.svg" >
+                            <h4>Successful</h4>
+                            <p>Course Added successfully</p>
+                            <button data-bs-dismiss="modal" [routerLink]="['/course']" id="popup">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </form>
+
+
+    </div>
+
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+

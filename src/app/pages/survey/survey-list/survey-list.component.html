@@ -1,0 +1,283 @@
+<div class="head-title">
+    <div class="left">
+      <h1>Survey</h1>
+      <ul class="breadcrumb">
+        <li>
+          <a href="#">Survey Listt</a>
+        </li>
+        <li><i class='bx bx-chevron-right' ></i></li>
+        <li>
+          <a class="active" href="#">Home</a>
+        </li>
+      </ul>
+    </div>
+<button id="toggle" class="bg-light-subtle btn
+border-danger shadow px-4 rounded-3 py-2 fw-bold" (click)="toggleList()">Create Survey</button>
+    <a href="#" class="btn-download">
+      <i class=' bx bxs-cloud-download'></i>
+      <span class="text">Export PDF</span>
+    </a>
+  </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-body text-center justify-content-center">
+                <img src="/assets/Approve.svg" alt="approve">
+                <h1>Successful</h1>
+                <p>Survey Updated Successfully</p>
+                <button data-bs-dismiss="modal" id="dismiss" class="btn px-4 py-1">ok</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="table-data">
+            <div class="order">
+        <div class="row align-items-center" *ngIf="!list" >
+          <div class="row">
+            <h3>Create Survey</h3>
+          </div>
+          <div class="row">
+                <form>
+                  <div class="row mt-5 justify-content-center">
+                    <div class="col-8">
+                      <label for="" class="form-label" >Name</label>
+                      <input type="text" ngModel
+                        class="form-control" name="name" id="name">
+                    </div>
+                  </div>
+                  <div class="row mt-4 justify-content-center" >
+                    <div class="col-4 offset-md-2">
+                      <button class="btn px-4 rounded-3 border-dark py-2" (click)="showRatings()" >Add Ratings</button>
+                    </div>
+                    <div class="col-4">
+                      <button class="btn px-4 rounded-3 border-dark py-2" (click)="showQuestions()" >Add Questions</button>
+                    </div>
+                  </div>
+                  <div class="row  mt-4" *ngIf="questionsection">
+                    <div class="row" *ngFor="let question of questions; index as index" >
+                      <div class="col-md-3 offset-md-2 mt-2">
+                        <label for="" class="form-label">Question {{index + 1}}</label>
+                        <input type="text" ngModel
+                        class="form-control" name="sd" id="coursename">
+                      </div>
+                      <div class="col-md-3 mt-2">
+                        <label for="" class="form-label">Type</label>
+                        <select name="coursename" ngModel class="form-select" aria-label="Default select example">
+                          <option selected></option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </select>
+                      </div>
+                      <div class="col-md-3 mt-2">
+                        <label for="" class="form-label">Choice</label>
+                        <input type="text" ngModel
+                        class="form-control" name="sd" id="coursename">
+                      </div>
+                      <div class="col-md-1">
+                        <label for="" class="form-label">&nbsp;</label>
+                        <button id="delete-icon" class="rounded-circle border-0 py-1 px-2 mt-5" (click)="deleteQuestion(index)">
+                         <i class="bx bxs-trash"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center mt-2" *ngIf="ratingsection">
+                    <div class="row" *ngFor="let rating of ratings; index as index" >
+                      <div class="col-md-3 offset-md-2 mt-2">
+                        <label for="" class="form-label">Rating {{index + 1}}</label>
+                        <input type="text" ngModel
+                        class="form-control" name="sd" id="coursename">
+                      </div>
+                      <div class="col-md-3 mt-2">
+                        <label for="" class="form-label">Type</label>
+                        <select name="coursename" ngModel class="form-select" aria-label="Default select example">
+                          <option selected></option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </select>
+                      </div>
+                      <div class="col-md-3 mt-2">
+                        <label for="" class="form-label">Choice</label>
+                        <input type="text" ngModel
+                        class="form-control" name="sd" id="coursename">
+                      </div>
+                      <div class="col-1">
+                        <label for="" class="form-label">&nbsp;</label>
+                        <button id="delete-icon" class="rounded-circle border-0 py-1 px-2 mt-5" (click)="deleteRating(index)">
+                         <i class="bx bxs-trash"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-5 justify-content-center mb-5">
+                    <div class="col-4">
+                      <button class="btn " id="back" type="button" (click)="toggleList()">Back</button>
+                    </div>
+                    <div class="col-4 text-end">
+                      <button class="btn 1" id="next" data-bs-toggle="modal" data-bs-target="#exampleModal">Save</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+          </div>
+
+
+          <div *ngIf="list">
+                  <div class="head">
+                    <h3>Approval List</h3>
+                    <div class="search-container">
+                      <form action="/search" method="get">
+                        <input class="search expandright" id="searchright" type="search" name="q" placeholder="Search">
+                        <label class="button searchbutton" for="searchright"><span class="mglass">&#9906;</span></label>
+                      </form>
+                    </div>
+                    <i class='bx bx-filter' style="color: #008fd3;"></i>
+                  </div>
+              <table>
+                <thead>
+                  <tr >
+                    <th>Course Name</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of items; index as index">
+                    <td>{{item.coursename}}</td>
+                    <td>
+                      <!-- <button class="rounded-circle border-0 py-1 px-2"
+                        [ngStyle]="{'background':item.selectopt? '#D64E49' : '#EFEEEE'}"><img class="mb-1"
+                          src="/assets/course/ellipses.svg" [ngStyle]="{'filter':item.selectopt? 'invert(100%)' : 'none'}"
+                          alt="ellipses" (click)="selectoption(item)">
+                      </button>
+                      <div class="option">
+                        <div class="dropdown" *ngIf="item.selectopt">
+                          <div class="tab" (click)="toggleEdit()">
+                            <img src="/assets/pencil.svg" alt="pencil">
+                            <p>Edit</p>
+                          </div>
+                          <div class="tab">
+                            <img src="/assets/delete.svg" alt="delete">
+                            <p>Delete</p>
+                          </div>
+                        </div>
+                      </div> -->
+        
+        
+                      <div class="input-group">
+                        <svg  class="dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="10 0 14 24" style="fill:  #000; margin-left: 23px;"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                          <li>
+                            <a class="dropdown-item" (click)="toggleEdit()"> <i class='bx bx-edit-alt'></i> Edit</a>
+                          </li>
+                          <li><a class="dropdown-item"><i class='bx bx-trash'></i>Delte</a></li>
+                          <li><a class="dropdown-item" href="#"><i class='bx bx-user-check'></i>Attendance</a></li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+         </div>
+        <!-- <div class="row" *ngIf="list && edit" [ngStyle]="{'opacity' : edit ? '100%' : '50%'}">
+          <div class="row mt-5">
+            <h3 style="margin-left: 5%;">{{ questionsection || ratingsection ? 'Survey' : 'Edit Survey' }}</h3>
+          </div>
+          <div class="row">
+            <div class="card bg-body mt-3" style=" overflow-y: scroll;" [ngStyle]="{'width' : questionsection || ratingsection ? '60vw' : '40vw'}">
+              <div class="card-body p-0 m-0 rounded-6">
+                <form>
+                  <div class="row mt-4 justify-content-center">
+                    <div class="col-8">
+                      <label for="" class="form-label" style="margin-left: 5%;">Name</label>
+                      <input type="text" ngModel
+                        class="form-control" name="name" id="name">
+                    </div>
+                  </div>
+                  <div class="row mt-4 justify-content-center" >
+                    <div class="col-md-6">
+                      <button class="btn px-4 rounded-3 border border-dark py-2" (click)="showRatings()">Add Ratings</button>
+                    </div>
+                    <div class="col-6">
+                      <button class="btn px-4 rounded-3 py-2" (click)="showQuestions()">Add Questions</button>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center mt-5" *ngIf="questionsection" style="overflow-y: scroll; height: 150px; overflow-x: hidden;">
+                    <div class="row" *ngFor="let question of questions; index as index">
+                      <div class="col-md-3 offset-md-2">
+                        <label for="" class="form-label">Question {{index + 1}}</label>
+                        <input type="text" ngModel
+                        class="form-control" name="sd" id="coursename">
+                      </div>
+                      <div class="col-md-3 mt-2">
+                        <label for="" class="form-label">Type</label>
+                        <select name="coursename" ngModel class="form-select" aria-label="Default select example">
+                          <option selected></option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </select>
+                      </div>
+                      <div class="col-md-3 mt-2">
+                        <label for="" class="form-label">Choice</label>
+                        <input type="text" ngModel
+                        class="form-control" name="sd" id="coursename">
+                      </div>
+                      <div class="col-1">
+                        <label for="" class="form-label">&nbsp;</label>
+                        <button id="delete-icon" class="rounded-circle border-0 py-1 px-2 mt-5" (click)="deleteQuestion(index)">
+                          <i class="bx bxs-trash"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center mt-5" *ngIf="ratingsection" style="overflow-y: scroll; height: 150px; overflow-x: hidden;">
+                    <div class="row" *ngFor="let rating of ratings; index as index" >
+                      <div class="col-md-3 offset-md-2">
+                        <label for="" class="form-label">Rating {{index + 1}}</label>
+                        <input type="text" ngModel
+                        class="form-control" name="sd" id="coursename">
+                      </div>
+                      <div class="col-md-3">
+                        <label for="" class="form-label">Type</label>
+                        <select name="coursename" ngModel class="form-select" aria-label="Default select example">
+                          <option selected></option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </select>
+                      </div>
+                      <div class="col-md-3">
+                        <label for="" class="form-label">Choice</label>
+                        <input type="text" ngModel
+                        class="form-control" name="sd" id="coursename">
+                      </div>
+                      <div class="col-1">
+                        <label for="" class="form-label">&nbsp;</label>
+                        <button id="delete-icon" class="rounded-circle border-0 py-1 px-2" (click)="deleteRating(index)">
+                          <i class="bx bxs-trash"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-4 justify-content-center mb-5">
+                    <div class="col-4">
+                      <button class="btn px-4 py-1" type="button" (click)="toggleEdit()">Back</button>
+                    </div>
+                    <div class="col-4 text-end">
+                      <button class="btn px-4 py-1" id="save" data-bs-toggle="modal" data-bs-target="#exampleModal">Save</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div> -->
+ 
+       
+   
+

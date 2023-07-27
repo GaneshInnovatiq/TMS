@@ -1,0 +1,207 @@
+<div class="head-title">
+    <div class="left">
+      <h1>Categories</h1>
+      <ul class="breadcrumb">
+        <li>
+          <a href="#">Course </a>
+        </li>
+        <li><i class='bx bx-chevron-right' ></i></li>
+        <li>
+          <a class="active" href="#">Home</a>
+        </li>
+      </ul>
+    </div>
+    <button class="bg-light-subtle btn
+    border-danger shadow px-4 rounded-3 py-2 fw-bold" id="create" (click)="toggleList()">{{list == true ?
+              'Create Categories' : 'List Categories'}}</button>
+    <a href="#" class="btn-download" (click)="upload()">
+      <i class='bx bxs-cloud-download' ></i>
+      <span class="text">Export PDF</span>
+    </a>
+  </div>
+
+            <div class="table-data" *ngIf="list">
+                <div class="order">
+                  <div class="head">
+                    <h3>Categories List</h3> 
+                    <!-- <div class="search-container">
+                        <form action="/search" method="get">
+                          <input class="search expandright" id="searchright" type="search" name="q" placeholder="Search">
+                          <label class="button searchbutton" for="searchright"><span class="mglass">&#9906;</span></label>
+                        </form>
+                      </div> -->
+                    <i class='bx bx-filter' style="color: #008fd3;"></i>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table">
+                        <thead >
+                            <tr>
+                                <th scope="col-6">Main Category</th>
+                                <th scope="col-6">Sub Category</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of listCat">
+                                <td >{{item.category_name}}</td>
+                                <td>
+                                  <ul  *ngFor="let subCategory of item.subCategories">
+                                    <!-- <li *ngFor="let subCategory of item.subCategories"> -->
+                                        {{ subCategory.category_name }}
+                                        </ul>
+                                </td>
+                               
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+                 
+                </div>
+              </div>
+
+
+              <div *ngIf="!list" class="border bg-white rounded-5 py-5 m-4">
+                <form [formGroup]="mainCategoryForm" (ngSubmit)="createMainCategory()">
+                <div class="row">
+              
+                  <div class="col-md-5  offset-md-1">
+                    <div class="form-group">
+                      <label class="fs-6"><b>Main Category Name</b></label>
+                      <input type="text"  id="category_name" formControlName="category_name"class="form-control  rounded-4"
+                      [class.invalid-input]="isSubmitted && mainCategoryForm.get('category_name')?.invalid || mainCategoryForm.get('category_name')?.invalid && mainCategoryForm.get('category_name')?.touched">
+                    </div>
+                    <div *ngIf="isSubmitted" [class.invalid-text]="isSubmitted && mainCategoryForm.get('category_name')?.invalid || mainCategoryForm.get('category_name')?.invalid && mainCategoryForm.get('category_name')?.touched">
+                      <div class="text-danger">
+                      {{ utils.getErrorMessage(mainCategoryForm, 'category_name')?.message }}
+                    </div>
+                  </div>
+                    
+                  </div>
+                  <div class="col-md text-center mt-4">
+                    <button  type="submit" class="btn crt-color rounded-4  ">Create Main Categories</button>
+                  </div>
+                </div>
+              </form>
+              <div>
+                <form [formGroup]="subCategoryForm" (ngSubmit)="createSubCategory()">
+                  <input type="hidden" formControlName="main_category_id" [value]="mainCategoryId">
+                <div formArrayName="subcategories" class="row mt-5">
+                  <div class="col-md-5 offset-md-1">
+                    <div *ngFor="let subcategory of subcategories.controls; let i = index" [formGroupName]="i"  class="form-group">
+                      <label   for="subcategory_name_{{i}}" class="fs-6"><b>Sub Category Name</b></label>
+                              <input type="text"  id="subcategory_name_{{i}}"  formControlName="category_name" class="form-control  rounded-4"
+                       >
+                       <!-- <div *ngIf="input.invalid && (input.dirty || input.touched)">
+                        <div *ngIf="input.errors?.required">This field is required.</div>
+                        <div *ngIf="input.errors?.minlength">Minimum length is 3 characters.</div>
+                      </div> -->
+                               <!-- [class.invalid-input]="isSubmitted && subcategories.controls[i].get('category_name')?.invalid || subcategories.controls[i].get('category_name')?.subcategory && subcategories.controls[i].get('category_name')?.touched" -->
+                               <div *ngIf="isSubmitted && subcategory.get('category_name')?.invalid && subcategory.get('category_name')?.invalid || subcategory.get('category_name')?.touched">
+                                <div *ngIf="isSubmitted && subcategory.get('category_name')?.errors?.['required']">
+                                <small class="text-danger">Enter Sub Category</small>
+                              </div>
+                                <!-- <div *ngIf="subcategory.get('category_name').errors?.minlength">Minimum length is 3 characters.</div> -->
+                              </div>
+                                        
+                    
+                    </div>
+                    
+                  </div>
+                  <div class="col-md text-center  mt-4 ">
+                    <button class="btn crt-color rounded-4  "  (click)="addSubCategoryField()" >Add Sub Categories</button>
+                  </div>
+              
+                </div>
+                <div class="col-md-6  text-center mt-4">
+                  <button type="submit" class="btn crt-color rounded-4  ">Create Sub Categories</button>   
+                </div>
+                  </form>
+              </div>
+              
+                <div class="row">
+                  <div class="col-md-2 offset-md-10 justify-content-end">
+                    <button (click)="toggleList()" id="back">Back</button>
+                    <!-- <button class="btn rounded-4 py-2 px-5 " id="#back" (click)="toggleList()">Back</button> -->
+                  </div>
+                  <!-- <div class="col-3">
+                    <button type="button" class="btn btn-primary" id="submit" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                  Submit </button>
+                  </div> -->
+                  <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel"
+                              aria-hidden="true">
+                              <div class="modal-dialog">
+                                  <div class="modal-content">
+                                      <div class="modal-body">
+                                          <img src="assets/Approves tick.svg" style="margin-left: -25px;">
+                                          <h4>Successful</h4>
+                                          <p style="padding-left: 20px;">Course Edit List submitted successfully</p>
+                                          <button data-bs-dismiss="modal" id="popup">OK</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                </div>
+              </div>
+
+
+  <!-- <div *ngIf="!list" class="border bg-white rounded-5 py-5 m-4">
+    <form [formGroup]="subCategoryForm" (ngSubmit)="createSubCategory()">
+    <div class="row m-5">
+      <div class="col-md-5  offset-md-1">
+        <div class="form-group">
+          <label class="fs-6"><b>Main Category Name</b></label>
+          <input type="text"  id="category_name" formControlName="category_name"class="form-control  rounded-4"
+          [class.invalid-input]="isSubmitted && mainCategoryForm.get('category_name')?.invalid || mainCategoryForm.get('category_name')?.invalid && mainCategoryForm.get('category_name')?.touched">
+        </div>
+        <div *ngIf="isSubmitted" [class.invalid-text]="isSubmitted && mainCategoryForm.get('category_name')?.invalid || mainCategoryForm.get('category_name')?.invalid && mainCategoryForm.get('category_name')?.touched">
+          <div class="text-danger">
+          {{ utils.getErrorMessage(mainCategoryForm, 'category_name')?.message }}
+        </div>
+      </div>
+      </div>
+      <div class="col-md text-center mt-4 ">
+        <button class="btn crt-color rounded-3 ">Create Main Categories</button>
+      </div>
+    </div>
+    <div class="row m-5 ">
+      <div class="col-md-5 offset-md-1">
+        <div class="form-group">
+          <label >Sub Category Name</label>
+          <input type="email" class="form-control  rounded-3" >
+        </div>
+      </div>
+      <div class="col-md text-center  mt-4 ">
+        <button class="btn crt-color rounded-3 " (click)="addSubCategoryField()">Add Sub Categories</button>
+      </div>
+      
+    </div>
+    <div class="col-md-6  text-center mt-4 ">
+      <button class="btn crt-color rounded-3  ">Create Sub Categories</button>
+    </div>
+  
+    <div class="row m-5">   
+      <div class="col-md-5 offset-md-1">
+        <button (click)="toggleList()" id="back">Back</button>
+        <button class="btn rounded-3 py-2 px-5 " id="#back" (click)="toggleList()">Back</button>
+      </div>
+      <div class="col-md-3 offset-md-3">
+        <button type="button" class="btn btn-primary" id="next" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+      Submit </button>
+      </div>
+      <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-body">
+                              <img src="assets/Approves tick.svg" style="margin-left: -25px;">
+                              <h4>Successful</h4>
+                              <p style="padding-left: 20px;">Course Edit List submitted successfully</p>
+                              <button data-bs-dismiss="modal" id="popup">OK</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+    </div>
+    </form>
+  </div> -->
+

@@ -1,0 +1,143 @@
+<div class="head-title">
+    <div class="left">
+      <h1>Course</h1>
+      <ul class="breadcrumb">
+        <li>
+          <a href="#">Course List</a>
+        </li>
+        <li><i class='bx bx-chevron-right' ></i></li>
+        <li>
+          <a class="active" href="#">Home</a>
+        </li>
+      </ul>
+    </div>
+    <a href="#" class="btn-download">
+      <i class=' bx bxs-cloud-download' ></i>
+      <span class="text">Export PDF</span>
+    </a>
+  </div>
+  <div class="container ">
+<div class="row">
+  <div class="col-md m-3 ">
+    <select class="form-select p-2  " [(ngModel)]="coursePaginationModel.main_category" (change)="mainCategoryChange()">
+      <option value="0" selected>Main Category</option>
+      <option *ngFor="let item of mainCategories" [value]="item.id">{{item.category_name}}</option>
+    </select>
+  </div>
+  <div class="col-md m-3">
+    <select class="form-select p-2 " (change)="subCategoryChange()" [(ngModel)]="coursePaginationModel.sub_category">
+      <option selected value="0">Sub Category</option>
+      <option *ngFor="let item of subCategories" [value]="item.id">{{item.category_name}}</option>
+    </select>
+  </div>
+  <div class="col-md m-3">
+    <select class="form-select p-2 " >
+      <option selected>Status</option>
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+  </div>
+</div>
+</div>
+
+  <div class="table-data">
+    <div class="order">
+      <div class="head">
+        <h3>Recent Course List</h3>
+        <div class="search-container">
+          <form action="/search" method="get">
+            <input class="search expandright" id="searchright" type="search" name="q" placeholder="Search"
+            [(ngModel)]="coursePaginationModel.filterText" 
+                  (ngModelChange)="getCoursesList()" 
+                  (change)="getCoursesList()">
+            <label class="button searchbutton" for="searchright"><span class="mglass">&#9906;</span></label>
+          </form>
+        </div>
+        <i class='bx bx-filter' style="color: #008fd3;"></i>
+      </div>
+      
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th >Course Name</th>
+              <th >Course Code</th>
+              <th >SC Code</th>
+              <th >Hours</th>
+              <th >Days</th>
+              <th >Main Category</th>
+              <th >Sub Category</th>
+              <th >WBS</th>
+              <th >Fees</th>
+              <th >Status</th>
+              <th >Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of dataSource">
+              <td>{{item.title }}</td>
+              <td>{{item.courseCode}}</td>
+              <td>{{item.skill_connect_code}}</td>
+              <td>{{item.training_hours}}</td>
+              <td>{{item.course_duration_in_days}}</td>
+              <td>{{item.main_category_text}}</td>
+              <td>{{item.sub_category_text}}</td>
+              <td>{{item.lab}}</td>
+              <td>{{item.fee}}</td>
+              <!-- <div *ngIf="item.status == 'active' "> -->
+                <td  >
+                  <span [ngClass]="item.status === 'Active' ? 'status pending' : 'status success'">{{item.status ? "Active" : "Inactive"}}</span></td>
+                <!-- </div> -->
+            <td>
+              <div class="input-group">
+                <svg  class="dropdown-toggle" data-bs-toggle="dropdown"
+                aria-expanded="false"
+                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="10 0 14 24" style="fill:  #000; margin-left: 23px;"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" [routerLink]="['/course-edit',item.id]"> <i class="fa-light fa-eye"></i>View</a></li>
+                  <li>
+                    <!-- <a class="dropdown-item" [routerLink]="['course-edit',item.id]"> <i class='bx bx-edit-alt'></i> Edit</a> -->
+                    <a class="dropdown-item" [routerLink]="['/course-edit',item.id]"> <i class='bx bx-edit-alt'></i> Edit</a>
+                  </li>
+                  <li><a class="dropdown-item" [routerLink]="['/list']" (click)="delete(item.id)"><i class='bx bx-trash'></i>Delete</a></li>
+                  <li><a class="dropdown-item" href="#"><i class='bx bx-user-check'></i>Attendance</a></li>
+                  
+                </ul>
+              </div>
+                  </td> 
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+     
+  
+  <!-- <div class="option"> -->
+    <!-- <div class="dropdown" *ngIf="item.optselected"> -->
+      <!-- <div class="tab">
+          <img src="/assets/pencil.svg" alt="pencil"> -->
+          <!-- <a type="button"  [routerLink]="['/course/edit',item.id]" class="menu_text">Edit</a> -->
+      <!-- </div>
+      <div class="tab">
+          <img src="/assets/delete.svg" alt="delete"> -->
+          <!-- <a type="button" [routerLink]="['/Course/List']" (click)="delete(item.id)" class="menu_text">Delete</a> -->
+      <!-- </div>
+      <div class="tab">
+          <img src="/assets/people.svg" alt="person">
+          <a href="#" class="menu_text">Attendance</a>
+      </div>
+    </div>
+    <button class="rounded-circle border-0 py-1 px-2" ><img class="mb-1"
+      src="/assets/course/ellipses.svg" alt="ellipses"></button>
+  </div> -->
+
+
+
+
+  
+   
+  
+  

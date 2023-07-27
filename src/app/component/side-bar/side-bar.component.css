@@ -1,0 +1,30 @@
+
+.arrow {
+    position: absolute;
+    /* margin-top: 18px; */
+    margin-right: 10px;
+    display: flex;
+}
+
+.icon-sidebar {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 12px;
+    border-radius: 50%;
+    box-shadow: 2px;
+
+}
+
+.sub-icon {
+    background-color: red;
+}
+
+.sub-icon:hover {
+    background-color: red;
+}
+
+.active-icon {
+
+    color:blue
+
+}
