@@ -1,0 +1,237 @@
+
+<div class="head-title">
+    <div class="left">
+      <h1>Schedule Class</h1>
+      <ul class="breadcrumb">
+        <li>
+          <a href="#">Schedule Class Create</a>
+        </li>
+        <li><i class='bx bx-chevron-right' ></i></li>
+        <li>
+          <a class="active" href="#">Home</a>
+        </li>
+      </ul>
+    </div>
+    <!-- <a href="#" class="btn-download" (click)="upload()">
+      <i class=' bx bxs-cloud-download' ></i>
+      <span class="text">Export PDF</span>
+    </a> -->
+  </div>
+    <div class="table-data">
+        <div class="order">
+    <div class="container ">
+                <div class="row" *ngIf="pageone">
+                    <div class="row text-center">
+                        <h4 style="position: relative; right: 20px;text-align: center;">Schedule Class Create</h4>
+                        <section class="step-wizard">
+                            <ul class="step-wizard-list " >
+                                <li class="step-wizard-item" [ngClass]="{'current-item':classForm.invalid}" >
+                                    <span class="progress-count">1</span>
+                                    <span class="progress-label">Course </span>
+                                </li>
+                                <li class="step-wizard-item " [ngClass]="{'current-item':classForm.valid}">
+                                    <span class="progress-count">2</span>
+                                    <span class="progress-label">Instructor & Lab</span>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                    <form [formGroup]="classForm">
+                        <div class="row mb-3 mt-5">
+                            <div class="col-md-7">
+                                <label for="" class="form-label">Course Name</label>
+                                <select name="coursename" ngModel class="form-select" aria-label="Default select example" formControlName="courseId"
+                                [class.invalid-input]="isSubmitted && classForm.get('courseId')?.invalid || classForm.get('courseId')?.invalid && classForm.get('courseId')?.touched">
+                                    <option>Choose...</option>
+                                    <option *ngFor="let item of courseList" [value]="item.id">{{item.title}}</option>
+                                </select>
+                                <div *ngIf="isSubmitted" [class.invalid-text]="isSubmitted && classForm.get('courseId')?.invalid || classForm.get('courseId')?.invalid && classForm.get('courseId')?.touched">
+                                    {{ utils.getErrorMessage(classForm, 'courseId')?.message }}
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="form-label col-12">Class Type</label>
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input" type="radio" name="classAccessType"
+                                            formControlName="classAccessType" value="public" [checked]="true">
+                                        <label class="form-check-label ms-2" for="exampleRadios1">
+                                            Public
+                                        </label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input" type="radio" name="classAccessType"
+                                            formControlName="classAccessType" value="private">
+                                        <label class="form-check-label ms-2" for="exampleRadios2">
+                                            Private
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-7">
+                                <label for="" class="form-label">Class Delivery</label>
+                                <select name="coursename" ngModel class="form-select" aria-label="Default select example" formControlName="classDeliveryType"
+                                [class.invalid-input]="isSubmitted && classForm.get('classDeliveryType')?.invalid ||
+                                classForm.get('classDeliveryType')?.invalid && classForm.get('classDeliveryType')?.touched">
+                                    <option selected value="online">Online</option>
+                                    <option value="offline">Offline</option>
+                                    <option value="hybrid">Hybrid</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5">
+                                <label for="" class="form-label">Instructor Cost</label>
+                                <input type="number" ngModel
+                                class="form-control" name="sd" id="coursename" formControlName="instructorCost">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-7">
+                                <label for="" class="form-label">Minimum Enrollment</label>
+                                <input type="number" ngModel
+                                class="form-control" name="sd" id="coursename" formControlName="minimumEnrollment">
+                            </div>
+                            <div class="col-md-5">
+                                <label for="" class="form-label">Maximum Enrollment</label>
+                                <input type="number" ngModel
+                                class="form-control" name="sd" id="coursename" formControlName="maximumEnrollment">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="" class="form-label">Status</label>
+                            <div class="selections">
+                                <div class="col-md-2 col-xs-11">
+                                    <div class="toggle" (click)="toggleStatus()">
+                                        <div class="switch-1" [ngStyle]="{'background' : status ? 'blue' : 'white'}">
+                                        </div>
+                                        <div class="switch-2" [ngStyle]="{'background' : !status ? '#D64E49' : 'white'}">
+                                            <h1 *ngIf="!status">&checkmark;</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-11 d-md-flex gap-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input"  formControlName="isGuaranteedToRun" type="checkbox" value="" id="flexCheckIndeterminate">
+                                        <label class="form-check-label" for="flexCheckIndeterminate">
+                                            Is Guaranteed To Run
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input"  formControlName="externalRoom" type="checkbox" value="" id="flexCheckIndeterminate">
+                                        <label class="form-check-label" for="flexCheckIndeterminate">
+                                            External Room
+                                        </label>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-4 col-xs-11"> -->
+                                   
+                                <!-- </div> -->
+                            </div>
+                        </div>
+                        <div class="row mb-5">
+                            <div class="col-6">
+                                <button id="back" routerLink="/class-list">Back</button>
+                            </div>
+                            <div class="col-6 text-end">
+                                <button id="next" (click)="togglePage()">Next</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row" *ngIf="!pageone">
+                    <section class="step-wizard">
+                        <ul class="step-wizard-list " >
+                            <li class="step-wizard-item"  >
+                                <span class="progress-count">1</span>
+                                <span class="progress-label">Course </span>
+                            </li>
+                            <li class="step-wizard-item " [ngClass]="{'current-item':classForm.valid}">
+                                <span class="progress-count">2</span>
+                                <span class="progress-label">Instructor & Lab</span>
+                            </li>
+                        </ul>
+                    </section>
+                    <div class="row mt-5">
+                        <div class="col-6">
+                            <h5>Assign Instructor & Lab Schedule</h5>
+                        </div>
+                        <div class="col-6 text-end">
+                            <button id="add" (click)="addNewRow()">
+                                <!-- <img src="/assets/Close.svg" alt="plus" style="display: inline;"> -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" ><path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4z"></path><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path></svg>
+                                <p style="display: inline; margin-left: 2px;">Add</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="card bg-body mt-3 mb-4" style="border: 1px solid #7A7A7A;">
+                            <div class="card-body p-0 m-0 rounded-2">
+                              <div class="tbl-container bdr">
+                                <div class="table-responsive">
+                                  <table >
+                                    <thead>
+                                      <tr class="text-center">
+                                        <th scope="col" *ngFor="let header of headeritems">{{header}}</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngFor="let element of dataSource; index as index">
+                                        <td>
+                                            <input class="form-control ls ts" type="datetime-local"
+                                                [(ngModel)]="element.start" style="width:95%" (change)="startDateChange(element)">
+                                        </td>
+                                        <td>
+                                            <input type="datetime-local" class="form-control ls ts"
+                                                [(ngModel)]="element.end" style="width:95%">
+                                        </td>
+                                        <td>
+                                            <select class="form-control ls ts" [(ngModel)]="element.instructor"
+                                                (change)="onChangeInstructor(element,index)" style="width:95%">
+                                                <option value="0" selected>Select</option>
+                                                <option *ngFor="let item of instructorList" [value]="item?.instructor_id">
+                                                    {{item?.user_id.name}}
+                                                </option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control ls ts" [(ngModel)]="element.lab" (change)="onChangeLab(element,index)"
+                                                style="width:95%">
+                                                <option value="0" selected>Select</option>
+                                                <option *ngFor="let item of labList" [value]="item?.id">
+                                                    {{item?.name}}
+                                                </option>
+                                            </select>
+                                        </td>
+                                        <td><button class="rounded-circle border-0 py-1 px-2" (click)="deleteRecord(index)">
+                                            <img class="mb-1"
+                                              src="/assets/delete.svg"></button>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                    </div>
+                    <div class="row mb-3 mt-3" style="margin-left: 10px;">
+                        <div class="col-md-8">
+                            <button id="back" (click)="togglePage()">Back</button>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <div class="row">
+                                <div class="col">
+                                    <button id="back" (click)="togglePage()">Cancel</button>
+                                </div>
+                                <div class="col">
+                                    <button type="submit" id="next" (click)="saveClass()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>

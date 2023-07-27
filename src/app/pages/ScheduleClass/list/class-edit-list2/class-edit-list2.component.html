@@ -1,0 +1,136 @@
+<div class="container-fluid bg-light" style="font-family: 'Nunito'">
+    <div class="container top mt-5">
+        <div class="row">
+            <!-- <h4>Schedule Class Editing</h4> -->
+            <div class="card text-start mt-3 p-5 rounded-5">
+                <div class="container">
+                    <div class="row text-center">
+                        <div class="row">
+                            <div class="row justify-content-center">
+                                <h4 style="margin-top: -18px;">Schedule Class Editing</h4>
+                                <div class="col-md-2 p-0 d-flex justify-content-center">
+                                    
+                                    <div id="parent">
+                                        <div>
+                                            <img src="assets/No.1.svg">
+
+                                        </div>
+                                        <div>
+                                            <img src="assets/Line.svg">
+                                        </div>
+                                        <div>
+                                            <img src="assets/RedNo.2.svg">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="child">
+                                    <div>
+                                        <p>Edit Course Create</p>
+                                    </div>
+
+                                    <div>
+                                        <p>Instructor & Lab</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 style="margin-left: 10px;">Assign Instructor & Lab Schedule</h5>
+                        </div>
+                        <div class="col-md-5 text-end">
+                            <button id="add" (click)="addItem()" class="rounded-4">
+                                <img src="/assets/Close.svg" alt="plus">
+                                <p>Add</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="card bg-body mt-3 mb-4" style="border: 1px solid #7A7A7A;">
+                            <div class="card-body p-0 m-0 rounded-2">
+                                <div class="tbl-container bdr w-120" style="border: 1px solid #7A7A7A;">
+                                    <div class="table-responsive-xxl">
+                                        <table class="table" style="font-size: 13px;">
+                                            <thead class="table-secondary">
+                                                <tr>
+                                                    <th scope="col" style="padding-left: 48px;">Start Date</th>
+                                                    <th scope="col" style="padding-left: 50px;">End Date</th>
+                                                    <th scope="col" style="padding-left: 10px;">Instructor</th>
+                                                    <th scope="col" style="padding-left: 15px;">Lab</th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of items; index as index">
+                                                    <td>
+                                                        <input type="datetime-local" name="start-date" id="start-date"
+                                                            class="form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="datetime-local" name="start-date" id="start-date"
+                                                            class="form-control">
+                                                    </td>
+                                                    <td>
+                                                        <select name="coursename" ngModel class="form-select"
+                                                            aria-label="Default select example">
+                                                            <option selected>Select...</option>
+                                                            <option value="Tan Boon">Tan Boon</option>
+                                                            <option value="Timothy">Timothy</option>
+                                                        </select>
+                                                    </td>
+
+                                                    <td>
+                                                        <select name="coursename" ngModel class="form-select"
+                                                            aria-label="Default select example">
+                                                            <option selected>Select...</option>
+                                                            <option value="Tan Boon">Data base</option>
+                                                            <option value="Timothy">Test Lab</option>
+                                                            <option value="Timothy">Test Lab</option>
+                                                            <option value="Timothy">Test Lab</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><button class="rounded-circle border-0 py-1 px-2"
+                                                            (click)="deleteItem(index)">
+                                                            <img class="mb-1" src="/assets/delete.svg"></button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <button id="back" (click)="Back()">Back</button>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button class="btn btn-primary me-md-2" type="button" id="cancel" (click)="Cancel()">Cancel</button>
+                                    <button type="button" class="btn btn-primary" id="submit" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal1">
+                                    Submit
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="assets/logo/Approve.svg" style="margin-left: 1px;">
+                <h4>Successful</h4>
+                <p style="padding-left: 25px;">Schedule Class Edit List submitted successfully</p>
+                <button data-bs-dismiss="modal" type="button" id="popup" (click)="Cancel()">OK</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,220 @@
+<section class="h-100 gradient-form" style="background-color: #eee;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-10">
+        <div class="card rounded-3 text-black">
+          <div class="row g-0">
+            <div class="col-lg-6">
+              <div class="card-body p-md-5 mx-md-4">
+
+                <div class="text-center">
+                  <img src="assets/logo.svg"
+                    style="width: 185px;" alt="logo">
+                  <h4 class="mt-1 mb-5 pb-1">We are The CAAS</h4>
+                </div>
+
+                <form  [formGroup]="loginForm">
+                  <p>Please login to your account</p>
+
+                  <div class="form-outline mb-4">
+                    <input type="email" id="form2Example11" class="form-control"
+                      placeholder="Phone number or email address" formControlName="email"
+                      [ngClass]="{ 'is-invalid': email }" (ngModelChange)="clearError('email')"/>
+                    <!-- <label class="form-label" for="form2Example11">Username</label> -->
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input [type]="showPassword ? 'text' : 'password'" type="password" formControlName ="password" (ngModelChange)="clearError('password')"aria-describedby="helpId" [ngClass]="{ 'is-invalid': email }" class="form-control" />
+                    <!-- <label class="form-label" for="form2Example22">Password</label> -->
+                    <div class="invalid-feedback" *ngIf="email" >
+                      {{ email }}
+                    </div>
+                  </div>
+
+                  <div class="text-center pt-1 mb-5 pb-1">
+                    <button class="btn btn-primary btn-block fa-lg mb-3 w-100" type="button" style="background-color: #00326c;" (click)="loginUser()">Log
+                      in</button>
+                    <a class="text-muted" href="#!">Forgot password?</a>
+                  </div>
+
+                  <div class="d-flex align-items-center justify-content-center pb-4">
+                    <p class="mb-0 me-2">Don't have an account?</p>
+                    <button type="button" class="btn btn-outline-danger">Create new</button>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+            <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+              <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                <h4 class="mb-4">We are more than just a company</h4>
+                <p class="small mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- <div class="login-area overflow-hidden">
+    <div class="d-none d-sm-none d-md-block d-lg-block d-xl-block ">
+        <div class="d-flex for-vh w-100 ">
+          <div class="left-side w-50 py-5">
+              <div class="content">
+                  <div class="container text-center py-4">
+                      <div class="logo">
+                        <img src="/assets/login/Logo.svg" alt="logo">
+                      </div>
+                      <div class="login-img">
+                        <img src="/assets/login/login.svg" alt="logo">
+                      </div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="have-account text-center">
+                      <p>Don’t have an account ! <a href="#"> Sign Up</a> </p>
+                  </div>
+              </div>
+          </div>
+          <div class="right-side w-50 py-5">
+              <div class="content p-5 d-flex align-items-center justify-content-center inner-content">
+                 <form  [formGroup]="loginForm" class="d-flex flex-column align-items-center justify-content-center w-100 p-5">
+                    <div class="form-group w-100 mb-4">
+                      <input type="text"
+                        class="form-control w-100"  formControlName="email"  id="email" name="email"  [ngClass]="{ 'is-invalid': email }" (ngModelChange)="clearError('email')"  aria-describedby="helpId" placeholder="Email ID"> -->
+                        <!-- <div class="invalid-feedback" *ngIf="email" >
+                          {{ email }}
+                        </div> -->
+                      <!-- </div> -->
+                      
+    
+                    <!-- <div class="form-group w-100 mb-2">
+                      <input [type]="showPassword ? 'text' : 'password'"
+                        class="form-control w-100" formControlName ="password" name="password" id="password"  (ngModelChange)="clearError('password')"aria-describedby="helpId" [ngClass]="{ 'is-invalid': email }"placeholder="Password"> -->
+                        <!-- <button (click)="onClick()">
+                          <i class="fa fa-eye" aria-hidden="true" *ngIf="!show"></i>
+                          <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="show"></i>
+                        </button> -->
+                        <!-- <i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer;"></i> -->
+                        
+                        <!-- <div class="invalid-feedback" *ngIf="email" >
+                          {{ email }}
+                        </div>
+                      </div>
+                    <div class="row w-100 mb-4">
+                      <div class="col-md-6">
+                          <div class="form-check ps-0 show-pass">
+                              <input type="checkbox" (click)="onClick()">
+                                <span>Show Password</span>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group w-100 text-end">
+                            <a href="" class="text-danger text-decoration-none fgt">Forgot Password ?</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group  w-100 mb-4">
+                        <div class="d-flex align-items-center w-100 justify-content-center">
+                          <span class="divider-line"></span>
+                          <span class="px-3 divider-text">OR</span>
+                          <span class="divider-line"></span>
+                        </div>
+    
+                    </div>
+                    <div class="form-group w-100 mb-4">
+                      <button type="button" class="btn btn-singPass d-flex align-items-center justify-content-center">
+                        <img src="/assets/login/singPass.svg" alt="singPass">
+                        <span class="px-2">Login with singPass</span>
+                        
+                        
+                      </button>
+                    </div>
+                   
+                    <div class="form-group mb-4 w-100 text-center d-flex justify-content-center">
+                      <button type="button" (click)="loginUser()"class="btn btn-login d-flex align-items-center">Log In <img class="ms-4 " src="assets/login/arrow28.svg"></button>
+                  </div>
+                 </form>
+              </div>
+          </div>
+        </div>
+    </div> -->
+  
+  
+    
+                <!-- row -->
+                <!-- <div class="d-block d-sm-block d-md-none d-lg-none">
+                    <div class="row text-center">
+                        <div class="col">
+                            <div class="logo">
+                                <img src="/assets/login/Logo.svg" alt="logo">
+                              </div>
+                              <div class="login-img-md">
+                                <img src="/assets/login/login.svg" alt="logo">
+                              </div>
+                        </div> -->
+                        <!-- <div class="col"> -->
+                            <!-- <form class="d-flex flex-column align-items-center justify-content-center w-100 p-5">
+                                <div class="form-group w-100 mb-4"> -->
+                                  <!-- <input type="text"
+                                    class="form-control w-100" name="" id="" aria-describedby="helpId" placeholder="Email ID"> -->
+                                <!-- </div>
+                
+                                <div class="form-group w-100 mb-2">
+                                  <input type="Password"
+                                    class="form-control w-100" name="" id="" aria-describedby="helpId" placeholder="Password">
+                                </div>
+                                <div class="row w-100 mb-4">
+                                  <div class="col-6 ">
+                                      <div class="form-check w-100 ps-0 show-pass">
+                                        <label>
+                                          <input type="checkbox">
+                                            Show Password
+                                        </label>
+                                      </div>
+                                  </div>
+                                  <div class="col-6">
+                                    <div class="form-group w-100 text-end">
+                                        <a href="" class="text-danger text-decoration-none fgt">Forgot Password ?</a>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row d-block d-sm-block d-md-none d-lg-none">
+                                  <div class="col-12">
+                                    <div class="form-group  w-100 mb-4">
+                                      <div class="d-flex align-items-center w-100 justify-content-center">
+                                        <span class="divider-line"></span>
+                                        <span class="px-3 divider-text">OR</span>
+                                        <span class="divider-line"></span>
+                                      </div>
+                                  </div>
+                                </div>
+                                  <div class="col-12">
+                                    <div class="form-group w-100 mb-4">
+                                      <button type="button" class="btn btn-singPass-md d-flex align-items-center justify-content-center">
+                                        <img src="/assets/login/singPass.svg" alt="singPass">
+                                        <span class="px-2">Login with Singpass</span>
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div class="col-12">
+                                    <div class="form-group mb-4 w-100 text-center d-flex justify-content-center">
+                                      <button type="button" class="btn btn-login d-flex align-items-center">Log In <i class="fa-solid fa-arrow-right mx-2"></i></button>
+                                  </div>
+                                  </div>
+                                </div>
+                                 -->
+                             <!-- </form> -->
+                        <!-- </div> -->
+                    <!-- </div>
+                </div> -->
+                <!-- End rows -->
+  <!-- </div>  -->
+  
+  

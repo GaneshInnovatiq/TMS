@@ -1,0 +1,26 @@
+.crt-color{
+    width: 275px;
+    border: 1px solid #7A7A7A;
+    color: #526D82;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+
+  #fileDropRef {
+    display: block;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    margin-top: -3px;
+  }
+
+
+  .border-dashed {
+    border: 1.5px dashed #7A7A7A;
+    border-radius: 6px;
+    background: #FFF;
+  }
+
+
+ 
